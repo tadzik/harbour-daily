@@ -13,13 +13,29 @@ ApplicationWindow
     property var backend: backendComponent.daily
     property int tasksRemaining
 
-    function updateTasks(model) {
+    function updateTasks() {
         var tasks = app.backend.get_tasks()
-        model.clear()
-        for (var i = 0; i < tasks.length; i++) {
-            model.append({ taskID: tasks[i].id, taskDescription: tasks[i].description, taskDone: (tasks[i].done || 0) })
+        backendComponent.tasksUpdated(tasks)
+    }
+
+    Connections {
+        target: backendComponent
+        onTasksUpdated: {
+            app.tasksRemaining = app.backend.get_undone_count()
         }
+    }
+
+    Component.onCompleted: {
         app.tasksRemaining = app.backend.get_undone_count()
+    }
+
+    Timer {
+        interval: 15 * 60 * 1000 // 15 minutes
+        running: true
+        repeat: true
+        onTriggered: {
+            app.updateTasks()
+        }
     }
 
 

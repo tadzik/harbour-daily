@@ -33,23 +33,27 @@ Page {
                 } else {
                     app.backend.undo_task(taskID)
                 }
-
-                app.tasksRemaining = app.backend.get_undone_count()
             }
         }
     }
 
-    Timer {
-        interval: 15 * 60 * 1000 // 15 minutes
-        running: true
-        repeat: true
-        onTriggered: {
-            app.updateTasks(tasksModel)
+    function reloadModel(tasks) {
+        tasksModel.clear()
+        for (var i = 0; i < tasks.length; i++) {
+            tasksModel.append({ taskID: tasks[i].id, taskDescription: tasks[i].description, taskDone: (tasks[i].done || 0) })
         }
     }
 
+    Connections {
+        target: backendComponent
+        onTasksUpdated: {
+            reloadModel(tasks)
+        }
+    }
+
+
     Component.onCompleted: {
-        app.updateTasks(tasksModel)
+        reloadModel(app.backend.get_tasks())
     }
 }
 

@@ -11,11 +11,13 @@ declare interface Database {
 
 class Daily {
     dbh: Database
+    backendComponent: any
 
-    constructor() {
+    constructor(backendComponent: any) {
         this.dbh = LocalStorage.openDatabaseSync(
             "dailydb", "0.1", "database for harbour-daily", 1000, this.dbconfig
         )
+        this.backendComponent = backendComponent
     }
 
     dbconfig(db: Database) : void {
@@ -59,6 +61,7 @@ class Daily {
             if (rs.rows.length == 0) {
                 console.log("BACKEND: Marking " + id + " as done")
                 tx.executeSql('INSERT INTO task_completions (task_id, done_at) VALUES (?, datetime("now"))', [id])
+                this.signal_tasks_updated()
             } else {
                 console.log("BACKEND: Task " + id + " was already done today, ignoring")
             }
@@ -74,6 +77,7 @@ class Daily {
                 console.log("BACKEND: Undoing " + id)
                 var row_id = rs.rows.item(0).id
                 tx.executeSql('DELETE FROM task_completions WHERE id = ?', [row_id])
+                this.signal_tasks_updated()
             }
         })
     }
@@ -82,11 +86,17 @@ class Daily {
         this.dbh.transaction((tx) => {
             var rs = tx.executeSql('INSERT INTO tasks (description) VALUES (?)' , [description])
         })
+        this.signal_tasks_updated()
     }
 
     remove_task(id: number) {
         this.dbh.transaction((tx) => {
             var rs = tx.executeSql('DELETE FROM tasks WHERE id = ?', [id])
         })
+        this.signal_tasks_updated()
+    }
+
+    signal_tasks_updated() {
+        this.backendComponent.tasksUpdated(this.get_tasks())
     }
 }

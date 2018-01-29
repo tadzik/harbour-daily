@@ -41,7 +41,6 @@ Page {
                     onClicked: {
                         app.backend.add_task(textField.text)
                         textField.text = ""
-                        app.updateTasks(tasksModel)
                     }
                 }
             }
@@ -66,7 +65,6 @@ Page {
                             onClicked: {
                                 Remorse.itemAction(delegate, "Removing task '" + taskDescription + "'", function() {
                                     app.backend.remove_task(taskID)
-                                     app.updateTasks(tasksModel)
                                 })
                             }
                         }
@@ -76,7 +74,22 @@ Page {
         }
     }
 
+    function reloadModel(tasks) {
+        tasksModel.clear()
+        for (var i = 0; i < tasks.length; i++) {
+            tasksModel.append({ taskID: tasks[i].id, taskDescription: tasks[i].description, taskDone: (tasks[i].done || 0) })
+        }
+    }
+
+    Connections {
+        target: backendComponent
+
+        onTasksUpdated: {
+            reloadModel(tasks)
+        }
+    }
+
     Component.onCompleted: {
-        app.updateTasks(tasksModel)
+        reloadModel(app.backend.get_tasks())
     }
 }
