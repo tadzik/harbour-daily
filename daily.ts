@@ -34,7 +34,7 @@ class Daily {
     get_tasks() : any[] {
         var tasks = []
         this.dbh.transaction((tx) => {
-            var rs = tx.executeSql('SELECT t.id, t.description, SUM(tc.done_at > datetime("now", "start of day")) AS done \
+            var rs = tx.executeSql('SELECT t.id, t.description, SUM(tc.done_at > datetime("now", "localtime", "start of day")) AS done \
                                    FROM tasks t LEFT OUTER JOIN task_completions tc on t.id = tc.task_id GROUP BY t.id')
             for (var i = 0; i < rs.rows.length; i++) {
                 tasks.push(rs.rows.item(i))
@@ -57,10 +57,10 @@ class Daily {
     mark_task_done(id: number) {
         this.dbh.transaction((tx) => {
             // Ignore if it's already marked
-            var rs = tx.executeSql('SELECT id FROM task_completions WHERE task_id = ? AND done_at > datetime("now", "start of day")' , [id])
+            var rs = tx.executeSql('SELECT id FROM task_completions WHERE task_id = ? AND done_at > datetime("now", "localtime", "start of day")' , [id])
             if (rs.rows.length == 0) {
                 console.log("BACKEND: Marking " + id + " as done")
-                tx.executeSql('INSERT INTO task_completions (task_id, done_at) VALUES (?, datetime("now"))', [id])
+                tx.executeSql('INSERT INTO task_completions (task_id, done_at) VALUES (?, datetime("now", "localtime"))', [id])
                 this.signal_tasks_updated()
             } else {
                 console.log("BACKEND: Task " + id + " was already done today, ignoring")
@@ -70,7 +70,7 @@ class Daily {
 
     undo_task(id: number) {
         this.dbh.transaction((tx) => {
-            var rs = tx.executeSql('SELECT id FROM task_completions WHERE task_id = ? AND done_at > datetime("now", "start of day")' , [id])
+            var rs = tx.executeSql('SELECT id FROM task_completions WHERE task_id = ? AND done_at > datetime("now", "localtime", "start of day")' , [id])
             if (rs.rows.length == 0) {
                 console.log("BACKEND: Task " + id + " was not done today, ignoring undo")
             } else {
