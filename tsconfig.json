@@ -1,0 +1,8 @@
+{
+    "files" : [
+        "daily.ts"
+    ],
+    "compilerOptions" : {
+        "outFile" : "qml/harbour-daily.js"
+    }
+}
