@@ -23,6 +23,14 @@
         <source>Daily</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No tasks!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add some in the settings (pulldown menu)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
