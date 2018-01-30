@@ -1,32 +1,27 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import QtQuick.LocalStorage 2.0
+import "harbour-daily.js" as Daily
 import "pages"
 
 ApplicationWindow
 {
     id: app
-
-    Backend {
-        id: backendComponent
-    }
-
-    property var backend: backendComponent.daily
+    property var backend: new Daily.Daily(app)
     property int tasksRemaining
+    signal tasksUpdated(var tasks)
 
     function updateTasks() {
         var tasks = app.backend.get_tasks()
         backendComponent.tasksUpdated(tasks)
     }
 
-    Connections {
-        target: backendComponent
-        onTasksUpdated: {
-            app.tasksRemaining = app.backend.get_undone_count()
-        }
+    onTasksUpdated: {
+        app.tasksRemaining = backend.get_undone_count()
     }
 
     Component.onCompleted: {
-        app.tasksRemaining = app.backend.get_undone_count()
+        app.tasksRemaining = backend.get_undone_count()
     }
 
     Timer {
@@ -40,7 +35,7 @@ ApplicationWindow
 
 
     initialPage: Component { MainPage { } }
-    cover: Qt.resolvedUrl("cover/CoverPage.qml", { backend: backendComponent.daily })
+    cover: Qt.resolvedUrl("cover/CoverPage.qml", { backend: backend })
     allowedOrientations: defaultAllowedOrientations
 }
 

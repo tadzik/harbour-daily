@@ -82,7 +82,7 @@ Page {
     }
 
     Connections {
-        target: backendComponent
+        target: app
 
         onTasksUpdated: {
             reloadModel(tasks)
