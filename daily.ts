@@ -24,9 +24,6 @@ class Daily {
         db.transaction((tx) => {
             tx.executeSql('CREATE TABLE IF NOT EXISTS tasks(id INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT)')
             tx.executeSql('CREATE TABLE task_completions(id INTEGER PRIMARY KEY AUTOINCREMENT, task_id INTEGER, done_at INTEGER)')
-            tx.executeSql('INSERT INTO tasks (description) VALUES ("Wyrzucić psa")')
-            tx.executeSql('INSERT INTO tasks (description) VALUES ("Wyprowadzić kwiaty")')
-            tx.executeSql('INSERT INTO tasks (description) VALUES ("Podlać śmieci")')
         })
         db.changeVersion("", "0.1")
     }
