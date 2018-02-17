@@ -4,12 +4,11 @@
 <context>
     <name>CoverPage</name>
     <message>
-        <source>Daily
-</source>
+        <source>tasks remaining</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>tasks remaining</source>
+        <source>Daily</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -36,6 +35,22 @@
     <name>SettingsPage</name>
     <message>
         <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter task name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add a new task</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove task</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Removing task &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

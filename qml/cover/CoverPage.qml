@@ -12,7 +12,7 @@ CoverBackground {
         Label {
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: Theme.fontSizeExtraLarge
-            text: qsTr("Daily\n") // Hack, center it properly
+            text: qsTr("Daily") + "\n" // Hack, center it properly
         }
 
         Label {

@@ -31,13 +31,13 @@ Page {
                     id: textField
                     width: parent.width * 3/4
                     anchors.horizontalCenter: parent.horizontalCenter
-                    placeholderText: "Enter task name"
+                    placeholderText: qsTr("Enter task name")
                 }
 
                 Button {
                     id: addButton
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: "Add a new task"
+                    text: qsTr("Add a new task")
                     onClicked: {
                         app.backend.add_task(textField.text)
                         textField.text = ""
@@ -61,9 +61,9 @@ Page {
 
                     menu: ContextMenu {
                         MenuItem {
-                            text: "Remove task"
+                            text: qsTr("Remove task")
                             onClicked: {
-                                Remorse.itemAction(delegate, "Removing task '" + taskDescription + "'", function() {
+                                Remorse.itemAction(delegate, qsTr("Removing task '%1'").arg(taskDescription), function() {
                                     app.backend.remove_task(taskID)
                                 })
                             }

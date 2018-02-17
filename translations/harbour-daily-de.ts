@@ -4,13 +4,12 @@
 <context>
     <name>CoverPage</name>
     <message>
-        <source>Daily
-</source>
-        <translation>Daily</translation>
-    </message>
-    <message>
         <source>tasks remaining</source>
         <translation>Verbleibende Aufgaben</translation>
+    </message>
+    <message>
+        <source>Daily</source>
+        <translation>Daily</translation>
     </message>
 </context>
 <context>
@@ -37,6 +36,22 @@
     <message>
         <source>Settings</source>
         <translation>Einstellungen</translation>
+    </message>
+    <message>
+        <source>Enter task name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add a new task</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove task</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Removing task &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

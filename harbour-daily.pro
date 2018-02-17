@@ -18,8 +18,6 @@ SOURCES += src/harbour-daily.cpp
 
 DISTFILES += qml/harbour-daily.qml \
     qml/cover/CoverPage.qml \
-    rpm/harbour-daily.changes.in \
-    rpm/harbour-daily.changes.run.in \
     rpm/harbour-daily.spec \
     rpm/harbour-daily.yaml \
     translations/*.ts \
@@ -33,8 +31,5 @@ SAILFISHAPP_ICONS = 86x86 108x108 128x128
 # following CONFIG line
 CONFIG += sailfishapp_i18n
 
-# German translation is enabled as an example. If you aren't
-# planning to localize your app, remember to comment out the
-# following TRANSLATIONS line. And also do not forget to
-# modify the localized app name in the the .desktop file.
-TRANSLATIONS += translations/harbour-daily-de.ts
+TRANSLATIONS += translations/harbour-daily-de.ts \
+                translations/harbour-daily-nl.ts
